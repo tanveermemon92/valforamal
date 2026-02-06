@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Proposal 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe4f1 50%, #ffd6e8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+        }
+
+        .cue-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.3);
+            position: relative;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .card-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            display: block;
+        }
+
+        .card-hidden {
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            display: none;
+        }
+
+        .btn-next {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .btn-next:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.6);
+        }
+
+        .cue-card::before {
+            content: '💕';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .cue-card h1 {
+            color: #ff1493;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 20, 147, 0.2);
+        }
+
+        .cue-card p {
+            color: #d8006c;
+            font-size: 1.5em;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+
+        .question-card {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            font-size: 1.8em;
+            padding: 50px;
+        }
+
+        .question-card p {
+            color: white;
+            font-weight: bold;
+        }
+
+        .buttons {
+            margin-top: 40px;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
+        }
+
+        .btn {
+            padding: 20px 60px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+            position: absolute;
+            transition: all 0.1s ease;
+        }
+
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0;
+            animation: rise 4s ease-in forwards;
+        }
+
+        @keyframes rise {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50vh) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(1.5);
+            }
+        }
+
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 60px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.5);
+            z-index: 2000;
+            text-align: center;
+            animation: popup 0.5s ease;
+        }
+
+        @keyframes popup {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .celebration h2 {
+            font-size: 3em;
+            color: #ff1493;
+            margin-bottom: 20px;
+        }
+
+        .celebration p {
+            font-size: 1.5em;
+            color: #d8006c;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 1999;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <div class="overlay" id="overlay"></div>
+    <div class="celebration" id="celebration">
+        <h2>🎉 Yay! 🎉</h2>
+        <p>It's a date! ❤️</p>
+        <p>Get ready for our romantic brunch!</p>
+        <p style="font-size: 3em; margin-top: 20px;">💕🥐☕🌹</p>
+    </div>
+
+    <div class="container">
+        <!-- Card 1 -->
+        <div class="cue-card card-visible" id="card1">
+            <h1>Hey Amal 💝</h1>
+            <button class="btn-next" onclick="nextCard(2)">💕</button>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="cue-card card-hidden" id="card2">
+            <p>Would you be my Valentine?</p>
+            <button class="btn-next" onclick="nextCard(3)">💕</button>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="cue-card card-hidden" id="card3">
+            <p>I want to take you on a date</p>
+            <button class="btn-next" onclick="nextCard(4)">💕</button>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="cue-card card-hidden" id="card4">
+            <p>Many people go for romantic late night dinner</p>
+            <button class="btn-next" onclick="nextCard(5)">💕</button>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="cue-card card-hidden" id="card5">
+            <p>How about we go for brunch?</p>
+            <button class="btn-next" onclick="nextCard(6)">💕</button>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="cue-card card-hidden" id="card6">
+            <p>I know you like brunch 🥐☕</p>
+            <button class="btn-next" onclick="nextCard(7)">💕</button>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="cue-card question-card card-hidden" id="card7">
+            <p>Can we go early morning?</p>
+            <div class="buttons" id="buttonContainer">
+                <button class="btn btn-yes" onclick="celebrate()">Yes! 💕</button>
+                <button class="btn btn-no" id="noBtn">No</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function nextCard(cardNumber) {
+            // Hide current card
+            const currentCard = document.querySelector('.card-visible');
+            currentCard.classList.remove('card-visible');
+            currentCard.classList.add('card-hidden');
+            
+            // Show next card
+            const nextCard = document.getElementById('card' + cardNumber);
+            nextCard.classList.remove('card-hidden');
+            nextCard.classList.add('card-visible');
+            
+            // Special handling for the last card with No button
+            if (cardNumber === 7) {
+                setTimeout(() => {
+                    const noBtn = document.getElementById('noBtn');
+                    noBtn.addEventListener('mouseenter', runAway);
+                    noBtn.addEventListener('touchstart', runAway);
+                }, 100);
+            }
+        }
+
+        function runAway(e) {
+            e.preventDefault();
+            const btn = this.getBoundingClientRect();
+            
+            // Random position within reasonable bounds
+            const maxX = window.innerWidth - btn.width - 40;
+            const maxY = window.innerHeight - btn.height - 40;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            this.style.position = 'fixed';
+            this.style.left = randomX + 'px';
+            this.style.top = randomY + 'px';
+            
+            // Add a little shake
+            this.style.animation = 'shake 0.3s';
+            setTimeout(() => {
+                this.style.animation = '';
+            }, 300);
+        }
+
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        function celebrate() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('celebration').style.display = 'block';
+            
+            // Create floating hearts
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => createHeart(), i * 100);
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('hearts').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 4000);
+        }
+    </script>
+</body>
+</html>
